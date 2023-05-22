@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: 'src/main.js',
-      name: 'Vue3DataTable',
+      name: 'Vue3DataTables',
       fileName: (format) => `vue3-data-tables.${format}.js`,
     },
     rollupOptions: {
