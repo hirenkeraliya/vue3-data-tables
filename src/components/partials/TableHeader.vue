@@ -49,23 +49,23 @@
         },
 
         tableHeaderClasses: {
-            type: string,
+            type: String,
             required: true,
         },
 
         sortDirection: {
-            type: string,
+            type: String,
             required: true,
         },
 
         sortBy: {
-            type: string,
+            type: String,
             required: true,
         },
     });
 
     const emits = defineEmits([
-        'update:sort-attribute',
+        'update:sort-by',
     ]);
 
     const prepareColumnLabel = (column) => {
@@ -80,6 +80,6 @@
     };
 
     const sortRecords = (column) => {
-        emits('update:sort-attribute', column.key);
+        emits('update:sort-by', column.key);
     };
 </script>

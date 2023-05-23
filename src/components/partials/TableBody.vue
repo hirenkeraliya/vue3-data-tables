@@ -12,7 +12,7 @@
         </tr>
     </tbody>
 
-    <tbody :class="tableBodyClasses" v-if="records.length === 0">
+    <tbody :class="tableBodyClasses" v-else>
         <tr
             v-for="(record, index) in filteredRecords"
             :key="'table-row-' + index"
@@ -44,6 +44,8 @@
 </template>
 
 <script setup>
+    import { computed } from 'vue';
+
     const props = defineProps({
         columns: {
             type: Array,
@@ -56,12 +58,12 @@
         },
 
         currentPage: {
-            type: Array,
+            type: Number,
             required: true
         },
 
         perPage: {
-            type: Array,
+            type: Number,
             required: true
         },
 
@@ -70,7 +72,7 @@
             required: true
         },
 
-        sortAttribute: {
+        sortBy: {
             type: String,
             required: true
         },
@@ -81,7 +83,7 @@
         },
 
         noDataMessage: {
-            type: string,
+            type: String,
             required: true
         },
 
@@ -110,7 +112,7 @@
     });
 
     const applySortingOnRecords = (records) => {
-        if (!props.sortAttribute || !props.sortDirection) {
+        if (!props.sortBy || !props.sortDirection) {
             return records;
         }
 
@@ -118,15 +120,15 @@
             let comparison = 0;
 
             if (
-                Object.prototype.hasOwnProperty.call(firstRecord, props.sortAttribute) &&
-                firstRecord[props.sortAttribute] < secondRecord[props.sortAttribute]
+                Object.prototype.hasOwnProperty.call(firstRecord, props.sortBy) &&
+                firstRecord[props.sortBy] < secondRecord[props.sortBy]
             ) {
                 comparison = -1;
             }
 
             if (
-                Object.prototype.hasOwnProperty.call(firstRecord, props.sortAttribute) &&
-                firstRecord[props.sortAttribute] > secondRecord[props.sortAttribute]
+                Object.prototype.hasOwnProperty.call(firstRecord, props.sortBy) &&
+                firstRecord[props.sortBy] > secondRecord[props.sortBy]
             ) {
                 comparison = 1;
             }

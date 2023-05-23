@@ -28,7 +28,7 @@
             :sort-direction="state.sortDirection"
             :sort-by="state.sortBy"
             :table-header-classes="tableHeaderClasses"
-            @update:sort-attribute="sortRecords"
+            @update:sort-by="sortRecords"
 
         ></TableHeader>
 
@@ -38,7 +38,7 @@
             :per-page="state.perPage"
             :current-page="state.currentPage"
             :sort-direction="state.sortDirection"
-            :sort-attribute="state.sortAttribute"
+            :sort-by="state.sortBy"
             :table-body-classes="tableBodyClasses"
             :body-row-classes="bodyRowClasses"
             :no-data-message="noDataMessage"
@@ -48,8 +48,9 @@
 </template>
 
 <script setup>
-    import { TableHeader } from "./partials/TableHeader.vue";
-    import { TableBody } from "./partials/TableBody.vue";
+    import TableHeader from "./partials/TableHeader.vue";
+    import TableBody from "./partials/TableBody.vue";
+import { reactive } from "vue";
 
     const props = defineProps({
         records: {
@@ -68,37 +69,42 @@
         },
 
         tableClasses: {
-            type: string,
-            default: ''
+            type: String,
+            default: 'table-auto'
         },
 
         tableHeaderClasses: {
-            type: string,
+            type: String,
             default: ''
         },
 
         tableBodyClasses: {
-            type: string,
+            type: String,
             default: ''
         },
 
         bodyRowClasses: {
-            type: string,
+            type: String,
             default: ''
         },
 
         noDataMessage: {
-            type: string,
+            type: String,
             default: 'There are no records to show.'
-        }
+        },
+
+        allowPagination: {
+            type: Boolean,
+            default: true
+        },
     });
 
     const state = reactive({
         perPage: 10,
         currentPage: 1,
 
-        sortAttribute: '',
-        sortDirection: '',
+        sortBy: 'id',
+        sortDirection: 'desc',
     });
 
     const updatePerPage = (event) => {
@@ -111,7 +117,7 @@
     };
 
     const sortRecords = (columnKey) => {
-        state.sortAttribute = columnKey;
+        state.sortBy = columnKey;
         state.sortDirection = state.sortDirection === 'asc' ? 'desc' : 'asc';
     };
 
